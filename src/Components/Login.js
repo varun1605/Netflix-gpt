@@ -1,6 +1,11 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidateData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -12,14 +17,6 @@ const Login = () => {
   const username = useRef(null);
 
   const handleButtonClick = () => {
-    // const checkResult = checkValidateData(
-    //   email.current.value,
-    //   password.current.value,
-    //   // username.current.value
-
-    // );
-    // setErrorMessage(checkResult);
-
     let checkResult;
     if (isSignInForm) {
       checkResult = checkValidateData(
@@ -30,10 +27,45 @@ const Login = () => {
       checkResult = checkValidateData(
         email.current.value,
         password.current.value,
-        username.current.value,
+        username.current.value
       );
     }
     setErrorMessage(checkResult);
+
+    if (checkResult) return;
+    if (!isSignInForm) {
+      //Sign Up logic
+
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode+"-"+errorMessage)
+        });
+    }
   };
 
   const toogleSignInForm = () => {
@@ -79,11 +111,12 @@ const Login = () => {
         ></input>
         <p className="text-red-600 font-bold">{errorMessage}</p>
         <button
-          className="p-4 my-6 bg-red-700 w-full rounded-lg"
+          className="p-3 my-4 bg-red-700 w-full rounded-lg"
           onClick={handleButtonClick}
         >
           {isSignInForm ? "Sign in" : "Sign Up"}
         </button>
+
         <p className="py-4 cursor-pointer" onClick={toogleSignInForm}>
           {isSignInForm
             ? "New to Netflix? Sign Up here"
