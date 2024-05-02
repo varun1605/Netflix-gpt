@@ -6,8 +6,10 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isSignInForm, setIsSignInForm] = useState(true);
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -44,12 +46,16 @@ const Login = () => {
         .then((userCredentials) => {
           const user = userCredentials.user;
           console.log(user);
+          //here in case it is a succesful navigation than the page will route it to the login page.
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorCode + "-" + errorMessage);
         });
+
+      //sign in logic
     } else {
       signInWithEmailAndPassword(
         auth,
@@ -59,11 +65,12 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessage(errorCode+"-"+errorMessage)
+          setErrorMessage(errorCode + "-" + errorMessage);
         });
     }
   };
