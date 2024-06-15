@@ -4,13 +4,27 @@ import Header from "./Header";
 // import { useDispatch } from "react-redux";
 import { deleteUser } from "firebase/auth";
 // import { addNowPlayingMovies } from "../utils/movieSlice";
-import useNowPlayingMovies from "../Hooks/useNowPlayingMovies"
+import useNowPlayingMovies from "../Hooks/useNowPlayingMovies";
+import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
-  useNowPlayingMovies()
+  useNowPlayingMovies();
   return (
     <div dis>
       <Header />
+      {/*
+        Main container
+          -VideoBackground
+          -VideoTitle
+
+       SecondaryContainer
+        -MovieList*n
+          -Cards*n   
+          
+      */}
+      <MainContainer />
+      {/* <SecondaryContainer /> */}
     </div>
   );
 };
