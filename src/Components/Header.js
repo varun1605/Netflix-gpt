@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { netFlixLogo } from "../utils/Constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
 
 const Header = () => {
   const dispatcher = useDispatch();
+  
 
   const [signOutBtn, setSignOutBtn] = useState(true);
   const navigate = useNavigate();
@@ -53,6 +55,12 @@ const Header = () => {
       }
     });
   }, []);
+
+  const handleGptSearchClick=()=>{
+    dispatcher(toggleGptSearchView())
+  }
+
+
   return (
     <div className="absolute top-0 px-8 py-2 bg-gradient-to-b from-black z-20 w-full flex justify-between">
       <img
@@ -62,6 +70,7 @@ const Header = () => {
       ></img>
       {signOutBtn && user ? (
         <div className="flex p-2">
+        <button className="bg-purple-800 py-2 px-4 mx-4 my-2 rounded-lg text-white" onClick={handleGptSearchClick}>GPT Search</button>
           <button
             onClick={handleSignOut}
             className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 "

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 // import { getMoviesOption } from "../utils/Constants";
 // import { useDispatch } from "react-redux";
@@ -8,13 +8,31 @@ import useNowPlayingMovies from "../Hooks/useNowPlayingMovies";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 import usePopularMovies from "../Hooks/usePopularMovies";
+import GptSearch from "./GptSearch";
+import { useSelector } from "react-redux";
 
 const Browse = () => {
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+  // const [showGptSearch,setShowGptSearch]=useState(false)
   useNowPlayingMovies();
-  usePopularMovies()
+  usePopularMovies();
+  // const toggleGpt=()=>{
+  //   setShowGptSearch(!showGptSearch)
+  // }
+
   return (
     <div dis>
       <Header />
+      {showGptSearch ? (
+        <GptSearch />
+      ) : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
+      {/* <Header toggleGpt={toggleGpt} />
+      {showGptSearch && <GptSearch/>} */}
       {/*
         Main container
           -VideoBackground
@@ -25,8 +43,6 @@ const Browse = () => {
           -Cards*n   
           
       */}
-      <MainContainer />
-      <SecondaryContainer />
     </div>
   );
 };

@@ -16,4 +16,5 @@
             -Movies*N
 -NetflixGPT
       -search bar
-      -Movie suggestion            
+      -Movie suggestion      
+      - creating a extra component to integrate gpt API      

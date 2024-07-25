@@ -10,7 +10,7 @@ function VideoBackground(props) {
   useMovieTrailer(props.movieId);
 
   return (
-    <div className="w-screen h-screen "> 
+    <div className="w-screen h-screen  "> 
       <iframe
         className="w-screen aspect-video h-screen "
         src={"https://www.youtube.com/embed/" + trailerVideoFromStore?.key+"?&autoplay=1&mute=1"}
