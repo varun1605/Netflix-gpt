@@ -13,3 +13,6 @@ const gptSlice = createSlice({
 });
 export const { toggleGptSearchView } = gptSlice.actions
 export default gptSlice.reducer;
+
+
+//Here the toggleGptSearchView is the action 

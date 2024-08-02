@@ -42,6 +42,7 @@ const Header = () => {
       }
     });
   }, []);
+  const showGptSearch=useSelector(store=>store.gpt.showGptSearch)
 
   const handleGptSearchClick = () => {
     dispatcher(toggleGptSearchView());
@@ -55,7 +56,8 @@ const Header = () => {
       <img src={netFlixLogo} alt="NetflixLogo" className="w-40 "></img>
       {signOutBtn && user ? (
         <div className="flex p-2">
-          <select
+        
+          {showGptSearch && <select
             className="rounded-lg bg-gray-700 m-2 text-yellow-50 p-2"
             onChange={handleLanguageChange}
           >
@@ -64,12 +66,12 @@ const Header = () => {
                 {lang.name}
               </option>
             ))}
-          </select>
+          </select>}
           <button
-            className="bg-purple-800 py-2 px-4 mx-4 my-2 rounded-lg text-white"
+            className="bg-purple-900 py-2 px-4 mx-4 my-2 rounded-lg text-white"
             onClick={handleGptSearchClick}
           >
-            GPT Search
+            {showGptSearch?"Home":"GPT Search"}
           </button>
           <button
             onClick={handleSignOut}
